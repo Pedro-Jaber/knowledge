@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.db = db;
 consign()
   .then("./config/middlewares.js")
+  .then("./api/validation.js")
   .then("./api")
   .then("./config/routes.js")
   .into(app);
