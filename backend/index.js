@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 //* Config
 app.db = db;
 consign()
+  .include("./config/passport.js")
   .then("./config/middlewares.js")
   .then("./api/validation.js")
   .then("./api")
