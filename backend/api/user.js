@@ -40,6 +40,7 @@ module.exports = (app) => {
         .db("users")
         .update(user)
         .where({ id: user.id })
+        .whereNull("deletedAt")
         .then((_) => res.status(204).send())
         .catch((err) => res.status(500).send(err));
     } else {
@@ -61,6 +62,7 @@ module.exports = (app) => {
           .db("users")
           .select("id", "name", "email", "admin")
           .where({ id })
+          .whereNull("deletedAt")
           .first();
 
         // console.log("user:", user);
@@ -76,10 +78,32 @@ module.exports = (app) => {
       app
         .db("users")
         .select("id", "name", "email", "admin")
+        .whereNull("deletedAt")
         .then((users) => res.json(users))
         .catch((err) => res.status(500).send(err));
     }
   };
 
-  return { save, get };
+  const remove = async (req, res) => {
+    try {
+      const articles = await app
+        .db("articles")
+        .where({ userId: req.params.id });
+
+      notExistsOrError(articles, "Usuário possui artigos.");
+
+      const rowsUpdated = await app
+        .db("users")
+        .update({ deletedAt: new Date() })
+        .where({ id: req.params.id });
+
+      existsOrError(rowsUpdated, "Usuário nao foi encontrado.");
+
+      res.status(204).send();
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  };
+
+  return { save, get, remove };
 };

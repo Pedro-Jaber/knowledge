@@ -1,3 +1,6 @@
+const admin = require("./admin");
+const { admin: require_admin } = require("./admin2");
+
 module.exports = (app) => {
   //* Auth
   app.post("/signup", app.api.user.save);
@@ -8,16 +11,21 @@ module.exports = (app) => {
   app
     .route("/users")
     .all(app.config.passport.authenticate())
-    .get(app.api.user.get)
-    .post(app.api.user.save);
-  app.route("/users/:id").get(app.api.user.get).put(app.api.user.save);
+    .get(require_admin, app.api.user.get)
+    .post(require_admin, app.api.user.save);
+  app
+    .route("/users/:id")
+    .all(app.config.passport.authenticate())
+    .get(require_admin, app.api.user.get)
+    .put(require_admin, app.api.user.save)
+    .delete(require_admin, app.api.user.remove);
 
   //* Category
   app
     .route("/categories")
     .all(app.config.passport.authenticate())
-    .get(app.api.category.get)
-    .post(app.api.category.save);
+    .get(require_admin, app.api.category.get)
+    .post(require_admin, app.api.category.save);
   app
     .route("/categories/tree")
     .all(app.config.passport.authenticate())
@@ -26,15 +34,15 @@ module.exports = (app) => {
     .route("/categories/:id")
     .all(app.config.passport.authenticate())
     .get(app.api.category.getById)
-    .put(app.api.category.save)
-    .delete(app.api.category.remove);
+    .put(require_admin, app.api.category.save)
+    .delete(require_admin, app.api.category.remove);
 
   //* Article
   app
     .route("/articles")
     .all(app.config.passport.authenticate())
-    .get(app.api.article.get)
-    .post(app.api.article.save);
+    .get(require_admin, app.api.article.get)
+    .post(require_admin, app.api.article.save);
   app
     .route("/articles/category/:id")
     .all(app.config.passport.authenticate())
@@ -43,6 +51,13 @@ module.exports = (app) => {
     .route("/articles/:id")
     .all(app.config.passport.authenticate())
     .get(app.api.article.getById)
-    .put(app.api.article.save)
-    .delete(app.api.article.remove);
+    .put(require_admin, app.api.article.save)
+    .delete(require_admin, app.api.article.remove);
+  // .delete(admin(app.api.article.remove));
+
+  //* Stats
+  app
+    .route("/stats")
+    .all(app.config.passport.authenticate())
+    .get(app.api.stat.get);
 };
