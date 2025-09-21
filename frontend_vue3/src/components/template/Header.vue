@@ -5,7 +5,7 @@
       <!--  fa fa-angle-left -->
     </a>
     <h1 class="title">
-      {{ title }}
+      <RouterLink to="/">{{ title }}</RouterLink>
     </h1>
 
     <UserDropdown v-if="!hideUserDropdown" />

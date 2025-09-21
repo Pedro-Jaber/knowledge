@@ -1,7 +1,9 @@
 const admin = require("./admin");
-const { admin: require_admin } = require("./admin2");
+const { admin: require_admin, log } = require("./admin2");
 
 module.exports = (app) => {
+  app.use(log);
+
   //* Auth
   app.post("/signup", app.api.user.save);
   app.post("/signin", app.api.auth.signin);

@@ -12,8 +12,6 @@ export const useStore = defineStore("main", {
     toggleMenu(isVisible) {
       if (isVisible === undefined) this.isMenuVisible = !this.isMenuVisible;
       else this.isMenuVisible = isVisible;
-
-      console.log("toggleMenu =", this.isMenuVisible);
     },
   },
 });
