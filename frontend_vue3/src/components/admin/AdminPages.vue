@@ -54,7 +54,7 @@
       </ul>
 
       <!-- Tabs Content -->
-      <div class="tab-content" id="myTabContent">
+      <div class="tab-content p-3" id="myTabContent">
         <!-- Artigos -->
         <div
           class="tab-pane fade show active"
