@@ -105,7 +105,7 @@ let categories = ref([]);
 const loadCategories = () => {
   const url = `${baseUrl}/categories`;
   axios.get(url).then((res) => {
-    categories.value = res.data;
+    categories.value = res.data.data;
     // console.log("categories:", categories.value);
   });
 };

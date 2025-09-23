@@ -92,7 +92,7 @@ module.exports = (app) => {
   const get = (req, res) => {
     app
       .db("categories")
-      .then((categories) => res.json(withPath(categories)))
+      .then((categories) => res.json({ data: withPath(categories) }))
       .catch((err) => res.status(500).send(err));
   };
 
@@ -101,7 +101,10 @@ module.exports = (app) => {
       .db("categories")
       .where({ id: req.params.id })
       .first()
-      .then((category) => res.json(category))
+      .then((category) => {
+        if (!category) return res.status(404).send("Categoria nao encontrada.");
+        res.json({ data: category });
+      })
       .catch((err) => res.status(500).send(err));
   };
 
@@ -120,7 +123,7 @@ module.exports = (app) => {
   const getTree = async (req, res) => {
     app
       .db("categories")
-      .then((categories) => res.json(toTree(categories)))
+      .then((categories) => res.json({ data: toTree(categories) }))
       .catch((err) => res.status(500).send(err));
   };
 

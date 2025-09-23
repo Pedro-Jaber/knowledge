@@ -21,7 +21,7 @@ let stat = ref({ users: 0, categories: 0, articles: 0 });
 
 const getStat = () => {
   axios.get(`${baseUrl}/stats`).then((res) => {
-    stat.value = res.data;
+    stat.value = res.data.data;
     console.log("stat:", stat.value);
   });
 };

@@ -3,7 +3,7 @@ const queries = require("./queries");
 module.exports = (app) => {
   const { existsOrError } = app.api.validation;
 
-  const save = (req, res) => {
+  const save = async (req, res) => {
     const article = {
       id: req.body.id,
       name: req.body.name,
@@ -21,10 +21,12 @@ module.exports = (app) => {
       existsOrError(article.userId, "Autor não informado");
       existsOrError(article.content, "Conteúdo não informado");
     } catch (msg) {
-      res.status(400).send(msg);
+      console.log("msg:", msg);
+      return res.status(400).send(msg);
     }
 
     if (article.id) {
+      console.log("update article");
       app
         .db("articles")
         .update(article)
@@ -32,6 +34,7 @@ module.exports = (app) => {
         .then((_) => res.status(204).send())
         .catch((err) => res.status(500).send(err));
     } else {
+      console.log("insert article");
       app
         .db("articles")
         .insert(article)
@@ -86,7 +89,7 @@ module.exports = (app) => {
       .first()
       .then((article) => {
         article.content = article.content.toString();
-        return res.json(article);
+        return res.json({ data: article });
       })
       .catch((err) => res.status(500).send(err));
   };
@@ -113,8 +116,8 @@ module.exports = (app) => {
       .whereIn("categoryId", ids)
       .orderBy("a.id", "desc")
       .limit(custon_limit)
-      .offset(page * limit - limit)
-      .then((articles) => res.json(articles))
+      .offset(page * custon_limit - custon_limit)
+      .then((articles) => res.json({ data: articles }))
       .catch((err) => res.status(500).send(err));
   };
 

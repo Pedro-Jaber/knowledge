@@ -149,7 +149,7 @@ let users = ref([]);
 const loadUsers = () => {
   const url = `${baseUrl}/users`;
   axios.get(url).then((res) => {
-    users.value = res.data;
+    users.value = res.data.data;
     // console.log("users:", users.value);
   });
 };

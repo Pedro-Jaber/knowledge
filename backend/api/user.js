@@ -80,7 +80,7 @@ module.exports = (app) => {
           res.status(404).send("Usuário não encontrado");
         }
 
-        res.json(user);
+        res.json({ data: user });
       } catch (err) {
         res.status(500).send(err);
       }
@@ -89,7 +89,7 @@ module.exports = (app) => {
         .db("users")
         .select("id", "name", "email", "admin")
         .whereNull("deletedAt")
-        .then((users) => res.json(users))
+        .then((users) => res.json({ data: users }))
         .catch((err) => res.status(500).send(err));
     }
   };
