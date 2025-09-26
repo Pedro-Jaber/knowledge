@@ -3,17 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "vue-toastification/dist/index.css";
 
+import "vue3-tree-vue/dist/style.css";
+
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import router from "./config/router";
 import App from "./App.vue";
 import Toast from "vue-toastification";
-
-// TEMPORAIO!
-import axios from "axios";
-axios.default.defaults.headers.common["Authorization"] =
-  "Bearer " +
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IlBlZHJvIEphYmVyIiwiZW1haWwiOiJwZWRyb2phYmVyY0BnbWFpbC5jb20iLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNzU4Mzk4MjczLCJleHAiOjE3NTg2NTc0NzN9.5mdoPANjd9u19ofuZgVc1DJXA8ldeCc7Ao4foSFFlKw";
 
 const app = createApp(App);
 const pinia = createPinia();

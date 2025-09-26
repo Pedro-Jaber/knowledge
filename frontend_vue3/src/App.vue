@@ -1,7 +1,12 @@
 <template>
-  <div id="app" :class="{ 'hide-menu': !store.isMenuVisible }">
-    <Header title="Knowledge" :hideToggle="false" :hideUserDropdown="false" class="bg-primary" />
-    <Menu />
+  <div id="app" :class="{ 'hide-menu': !store.isMenuVisible || !store.user }">
+    <Header
+      title="Knowledge"
+      :hideToggle="!store.user"
+      :hideUserDropdown="!store.user"
+      class="bg-primary"
+    />
+    <Menu v-if="store.user" />
     <Content />
     <Footer />
   </div>

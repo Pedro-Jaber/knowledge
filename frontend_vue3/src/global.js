@@ -1,5 +1,6 @@
 import { defaultError, defaultSuccess } from "./config/msgs";
 
+export const userKey = "__knowledge_user";
 export const baseUrl = "http://localhost:3000";
 
 export function showError(e) {

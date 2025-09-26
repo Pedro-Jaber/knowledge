@@ -3,7 +3,7 @@
     <PageTitle icon="fa fa-folder" :main="category.name" sub="Categoria" />
     <ul class="p-0">
       <li v-for="article in articles" :key="article.id">
-        {{ article.name }}
+        <ArticleItem :article="article" />
       </li>
     </ul>
     <div class="load-more d-flex justify-content-center align-items-center mt-3">
@@ -17,9 +17,11 @@
 <script setup>
 import { baseUrl } from "@/global";
 import axios from "axios";
-import PageTitle from "../template/PageTitle.vue";
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
+
+import PageTitle from "../template/PageTitle.vue";
+import ArticleItem from "./ArticleItem.vue";
 
 const emptyCategory = () => ({
   name: "",
@@ -32,6 +34,17 @@ const articles = ref([]);
 const page = ref(1);
 const limit = ref(3);
 const loadMore = ref(true);
+
+watch(route, (to) => {
+  category.id = to.params.id;
+
+  articles.value = [];
+  page.value = 1;
+  loadMore.value = true;
+
+  getCategory();
+  getArticles();
+});
 
 const getCategory = () => {
   const url = `${baseUrl}/categories/${category.id}`;
