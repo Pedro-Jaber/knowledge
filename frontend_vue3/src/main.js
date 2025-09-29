@@ -5,6 +5,8 @@ import "vue-toastification/dist/index.css";
 
 import "vue3-tree-vue/dist/style.css";
 
+import "./config/axios";
+
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import router from "./config/router";

@@ -49,9 +49,12 @@ const signin = () => {
     .then((res) => {
       store.setUser(res.data);
       localStorage.setItem(userKey, JSON.stringify(res.data));
-      router.push({ name: "articles" });
+      router.push({ name: "Home" });
     })
-    .catch(showError);
+    .catch((err) => {
+      showError(err);
+      console.log(err);
+    });
 };
 
 const signup = () => {

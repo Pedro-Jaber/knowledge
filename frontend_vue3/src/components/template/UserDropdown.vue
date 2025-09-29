@@ -8,15 +8,28 @@
       <i class="fa fa-angle-down"></i>
     </div>
     <div class="user-dropdown-content">
-      <RouterLink to="/admin"><i class="fa fa-cogs"></i> Administração</RouterLink>
-      <RouterLink><i class="fa fa-sign-out"></i> Sair</RouterLink>
+      <RouterLink to="/admin" v-if="store.user.admin"
+        ><i class="fa fa-cogs"></i> Administração</RouterLink
+      >
+      <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Sair</a>
     </div>
   </div>
 </template>
 
 <script setup>
+import { userKey } from "@/global";
+
 import { useStore } from "@/config/store";
 const store = useStore();
+
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const logout = () => {
+  localStorage.removeItem(userKey);
+  store.setUser(null);
+  router.push({ name: "Auth" });
+};
 </script>
 
 <style>
