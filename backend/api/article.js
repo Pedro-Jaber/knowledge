@@ -11,6 +11,7 @@ module.exports = (app) => {
       categoryId: req.body.categoryId,
       userId: req.body.userId,
       content: req.body.content,
+      imageUrl: req.body.imageUrl,
     };
     if (req.params.id) article.id = req.params.id;
 

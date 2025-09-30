@@ -9,17 +9,19 @@
 </template>
 
 <script setup>
+import { useMq } from "vue3-mq";
+const mq = useMq();
+
 import { useStore } from "@/config/store";
-import { baseUrl } from "@/global";
-import axios from "axios";
+const store = useStore();
 
-// import Tree from "../tree/Tree.vue";
-import Vue3TreeVue from "vue3-tree-vue";
-
-import { onMounted, ref, watch } from "vue";
 import router from "@/config/router";
 
-const store = useStore();
+import { onMounted, ref, watch } from "vue";
+import axios from "axios";
+
+import Vue3TreeVue from "vue3-tree-vue";
+import { baseUrl } from "@/global";
 
 const treeFilter = ref("");
 const treeData = ref([]);
@@ -46,6 +48,10 @@ const getTreeData = async () => {
 const onItemSelected = (item) => {
   // console.log("item:", item);
   router.push({ name: "ArticlesByCategory", params: { id: item.id } });
+
+  if (mq.xs || mq.sm) {
+    store.toggleMenu();
+  }
 };
 
 // Lifecycle

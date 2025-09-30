@@ -12,6 +12,7 @@ import { createPinia } from "pinia";
 import router from "./config/router";
 import App from "./App.vue";
 import Toast from "vue-toastification";
+import { Vue3Mq } from "vue3-mq";
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -29,8 +30,18 @@ const toast_options = {
   icon: true,
   rtl: false,
 };
+const breakpoints = {
+  xs: 576,
+  sm: 768,
+  md: 992,
+  lg: 1200,
+  xl: 1400,
+  xxl: Infinity,
+};
 
 app.use(router);
 app.use(pinia);
 app.use(Toast, toast_options);
+// app.use(Vue3Mq, { breakpoints, global: true });
+app.use(Vue3Mq, { presets: "bootstrap5", global: true });
 app.mount("#app");
